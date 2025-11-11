@@ -1,103 +1,85 @@
+# AWS Critical Thinking Project
 
-# AWS Critical Thinking
+## Critical Inquiry
+As a cloud architect responsible for crafting AWS cloud solutions for two distinct company websites, how can **reverse proxy technology** be strategically implemented to enhance **security**, **scalability**, and **performance**, while ensuring **optimal resource utilization** and **cost-efficiency**?  
 
-## AWS Critical Thinking Projects and Questions
-
-### Cloud Storage Solutions and S3
-
-#### **Introduction to Cloud Storage**
-
-**1. What are the different types of cloud storage services (block, file, and object storage)? Which type of storage is Amazon S3?**  
-- **Block Storage:** Data is stored in fixed-size blocks. It’s suitable for databases or virtual machine disks (e.g., Amazon EBS).  
-- **File Storage:** Data is stored in a hierarchical structure with folders and files (e.g., Amazon EFS).  
-- **Object Storage:** Data is stored as objects with metadata and a unique ID. Ideal for unstructured data like images, videos, and backups.  
-- **Amazon S3** is an **Object Storage** service.
-
-**2. What are the key features of Amazon S3 (durability, availability, scalability, and security)?**  
-- **Durability:** 99.999999999% (11 nines) durability.  
-- **Availability:** Multiple availability zones to ensure high uptime.  
-- **Scalability:** Automatically handles growth in data volume and request traffic.  
-- **Security:** Supports encryption (SSE-S3, SSE-KMS) and fine-grained access controls via IAM and bucket policies.
-
-**3. How does Amazon S3 differ from other cloud storage services like Google Cloud Storage and Microsoft Azure Blob?**  
-- S3 offers deeper AWS service integrations (Lambda, CloudFront, etc.).  
-- Broader storage classes and lifecycle policies.  
-- Consistent global performance and simpler pricing structure.  
-
-**4. What are the benefits of using Amazon S3 (cost-effectiveness, ease of use, and flexibility)?**  
-- Pay-as-you-go model reduces upfront costs.  
-- Easy to manage through AWS Console, CLI, or SDKs.  
-- Suitable for data backups, hosting static websites, and analytics.
-
-**5. How does Amazon S3 integrate with other AWS services (S3 bucket policies, IAM roles, EC2, CloudFront, and Lambda)?**  
-- **IAM Roles:** Control access for EC2, Lambda, and other services.  
-- **CloudFront:** Delivers S3 content globally with low latency.  
-- **Lambda:** Triggers functions on object events (e.g., uploads).  
-- **S3 Bucket Policies:** Define who can access the bucket and what actions they can perform.
-
-**6. What are the best practices for using Amazon S3 (data encryption, access control, and data lifecycle management)?**  
-- Encrypt data at rest and in transit.  
-- Use IAM roles and least privilege principles.  
-- Enable versioning and lifecycle rules for archiving and deletion.  
-- Monitor access with AWS CloudTrail.
+Design and deploy an infrastructure on AWS Cloud for **two company websites** utilizing reverse proxy technology.
 
 ---
 
-### **Storage Solution for Large E-Commerce Website Assets**
+## Scenario
+You are part of a team charged with **migrating two company websites** to the AWS cloud infrastructure.
 
-For an e-commerce website storing large images, videos, and product assets:  
-- **Recommended Solution:** Use **Amazon S3** as the main storage.  
-- **Enhancements:**  
-  - Use **Amazon CloudFront** as a CDN for caching.  
-  - Store static assets (images, videos) in S3 buckets with versioning.  
-  - Configure **S3 Intelligent-Tiering** for cost optimization.  
-  - Integrate with **Lambda@Edge** for dynamic content optimization.
+1. **Website 1 – E-commerce Platform:**  
+   - Manages sensitive customer information.  
+   - Requires high security, reliability, and data protection.
 
-**Benefits:**  
-- Scalable and highly available.  
-- Reduced load on servers.  
-- Cost-efficient due to automatic tiering and caching.
+2. **Website 2 – Content Management System (CMS):**  
+   - Used for publishing articles and blogs.  
+   - Requires fast content delivery and flexible scalability.
 
----
+Both websites demand:
+- Robust **security protocols**  
+- **Scalable architecture** to handle varying traffic loads  
+- **Efficient resource management** to minimize costs  
 
-### **Security Strategy for Object Storage**
-
-To store 30 internal videos securely in Amazon S3:  
-- **Encryption:** Enable **SSE-KMS** for encryption at rest and HTTPS for in-transit encryption.  
-- **Access Control:**  
-  - Use IAM policies for limited user access.  
-  - Block public access at bucket level.  
-  - Enable MFA Delete for versioning.  
-- **Monitoring:**  
-  - Enable **AWS CloudTrail** and **S3 Access Logs**.  
-  - Set up **AWS Config Rules** for compliance checks.  
-- **Additional:** Implement lifecycle rules to move inactive videos to Glacier Deep Archive.
+The challenge:  
+How can you employ **reverse proxy technology** within the AWS environment to meet these requirements effectively for each website while optimizing their **performance** and **security**?
 
 ---
 
-### **Disaster Recovery Planning**
+## Project Goals
 
-A disaster recovery (DR) plan ensures business continuity during outages:  
-
-**1. Backup Strategy:**  
-- Enable **S3 Cross-Region Replication (CRR)** to store copies of data in another AWS Region.  
-- Schedule automated backups using **AWS Backup** or Lambda scripts.
-
-**2. Redundancy:**  
-- Deploy web servers across multiple Availability Zones (Multi-AZ).  
-- Use **Elastic Load Balancers** to distribute traffic.
-
-**3. Failover:**  
-- Configure **Route 53 DNS failover** between primary and backup sites.  
-
-**4. Recovery Procedures:**  
-- Test backup restoration regularly.  
-- Use **CloudFormation** templates for infrastructure redeployment.
+### 1. Understand the Project
+Comprehend the project requirements from the provided **scenario** and **infrastructure diagram**.
 
 ---
 
-### **Documentation**
+### 2. Enhanced Security
+- Utilize **reverse proxy technology** to act as a **shield** between the internet and the company websites.  
+- Add an additional layer of security by inspecting and filtering incoming traffic before reaching the web servers.  
+- Protect web servers from **DDoS**, **malicious requests**, and **direct exposure** to the internet.  
+- Use **AWS WAF (Web Application Firewall)** integrated with **Application Load Balancer (ALB)** or **NGINX Reverse Proxy**.
 
-- Document all configurations, IAM roles, and bucket policies.  
-- Include screenshots of S3 setup, IAM permissions, and CloudFront distributions.  
-- Upload this markdown file to a GitHub repository and submit the repository link for review.
+---
+
+### 3. Scalability
+- Design the infrastructure to **dynamically scale** based on traffic demands.  
+- Use **AWS Auto Scaling Groups** and **Elastic Load Balancers (ELBs)** with reverse proxy servers.  
+- Reverse proxy efficiently distributes incoming requests across multiple backend web servers.  
+- Helps handle **traffic spikes** on the e-commerce site and **fluctuating loads** on the CMS.
+
+---
+
+### 4. Performance Optimization
+- Implement **caching mechanisms** within the reverse proxy (e.g., **NGINX**, **CloudFront**, or **Varnish**) to store frequently accessed content.  
+- Reduce **latency** and improve **response times** for end-users.  
+- Use **CloudFront CDN** to accelerate content delivery globally.
+
+---
+
+### 5. Resource Utilization
+- Optimize resource allocation using AWS managed services:
+  - **Amazon EC2** → for web servers  
+  - **Amazon RDS** → for relational databases  
+  - **AWS Lambda** → for serverless event-driven functions  
+- Ensure efficient utilization of compute resources to maintain **cost-effectiveness**.  
+- Use **AWS Trusted Advisor** and **Cost Explorer** for optimization insights.
+
+---
+
+### 6. High Availability
+- Configure **redundancy** and **failover mechanisms** within the infrastructure.  
+- Deploy web servers across **multiple Availability Zones (AZs)** to minimize downtime.  
+- Implement **Route 53** health checks and **failover routing** for automatic recovery.  
+- Ensure uninterrupted service and **high uptime** for both websites.
+
+---
+
+## Summary
+By integrating **reverse proxy technology** (such as NGINX, HAProxy, or AWS ALB) within the AWS cloud environment:
+- The **e-commerce site** gains added security and controlled access to sensitive data.  
+- The **CMS** benefits from improved caching and faster global delivery.  
+- Both enjoy **scalable**, **secure**, and **cost-efficient** performance under a unified cloud architecture.
+
+
